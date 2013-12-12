@@ -483,7 +483,7 @@ void ExampleScene::initializeAssign6()
 	rtBounceDepth(3);
 	rtUseShadow(false);
 	rtShadowBias(1e-4f);
-	rtSampleRate(5);
+	rtSampleRate(1);
     
     
     rtLoadTexture("../Standard_Tests/cherry_blossom_texture.png");
@@ -532,9 +532,9 @@ void ExampleScene::initializeAssign6()
                /*uv1*/STPoint2(0.f,0.f),/*uv2*/STPoint2(1.f,1.f),/*uv3*/STPoint2(0.f,1.f));
     rtUnbindTexture();
 	
-	////set focus on water droplet
-	rtSetApeture(20.f);
-	rtSetFocus(STPoint3(.5f, -1.185f, .5f));
+//	////set focus on water droplet
+//	rtSetApeture(20.f);
+//	rtSetFocus(STPoint3(.5f, -1.185f, .5f));
 }
 
 
@@ -545,62 +545,88 @@ void ExampleScene::initializeFinalImage()
 	////global settings
 	rtCamera(/*eye*/STPoint3(0.f,0.f,6.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/55.f,/*aspect*/1.f);
 	rtOutput(/*width*/1920,/*height*/1920,/*path*/"../Standard_Tests/FinalImage.png");
-	rtBounceDepth(3);
+	rtBounceDepth(1);
 	rtUseShadow(false);
 	rtShadowBias(1e-4f);
 	rtSampleRate(1);
     
     rtLoadTexture("../Standard_Tests/background.jpg");
     rtLoadTexture("../Standard_Tests/hummingbird_texture.png");
-    rtLoadTexture("../Standard_Tests/cherry_blossom_texture.png");
+//    rtLoadTexture("../Standard_Tests/petal_texture.png");
+    rtLoadTexture("../Standard_Tests/petal_texture copy.png");
     rtLoadTexture("../Standard_Tests/bark_color.jpg");
+    rtLoadTexture("../Standard_Tests/stem_texture.jpg");
     
     
 	rtAmbientLight(STColor3f(.1f,.1f,.1f));
 	rtPointLight(STPoint3(0.f,50.f,100.f),STColor3f(1.f,1.f,1.f));
     
 	////cherry blossoms
-    Material mat_cherry_blossoms(/*ambient*/STColor3f(1.f,1.f,1.f),/*diffuse*/STColor3f(1.f,1.f,1.f),/*specular*/STColor3f(.2f,.2f,.2f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/40.f);
-	rtMaterial(mat_cherry_blossoms);
-    
     rtPushMatrix();
     
 	rtRotate(-28.f,-40.f,-10.f);
     
+    //petals
+    Material mat_petals(/*ambient*/STColor3f(1.f,1.f,1.f),/*diffuse*/STColor3f(1.f,1.f,1.f),/*specular*/STColor3f(.2f,.2f,.2f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/40.f);
+    rtMaterial(mat_petals);
+
     rtBindTexture(2);
-    rtTriangleMesh("../Standard_Tests/cherry_blossoms.obj",true,false);
+//    rtTriangleMesh("../Standard_Tests/cherry_blossoms.obj",true,false);
+    rtTriangleMesh("../Standard_Tests/cherry_blossom_petals.obj", false,false);
     rtUnbindTexture();
+    
+    //branches
+    //MATERIAL
+    rtBindTexture(3);
+    rtTriangleMesh("../Standard_Tests/cherry_blossom_branches.obj", true,false);
+    rtUnbindTexture();
+    
+    //stems
+    //MATERIAL
+    rtBindTexture(4);
+    rtTriangleMesh("../Standard_Tests/cherry_blossom_stems.obj", true,false);
+    rtUnbindTexture();
+    
+    //sepals
+    //MATERIAL
+//    rtBindTexture(4);
+    rtTriangleMesh("../Standard_Tests/cherry_blossom_sepals.obj", true,false);
+//    rtUnbindTexture();
+    
     rtPopMatrix();
     
     //hummingbird
+    //MATERIAL
     rtPushMatrix();
-    
+    rtScale(.7f, .7f, .7f);
+    rtTranslate(-2.f, -.7f, 0.f);
+    rtRotate(0.f, 0.f, 0.f);
     rtBindTexture(1);
     rtTriangleMesh("../Standard_Tests/hummingbird_textured.obj", true, false);
     rtUnbindTexture();
     rtPopMatrix();
     
     
-    //water droplet 1
-    Material water1(/*ambient*/STColor3f(.1f,.1f,.1f),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.5f,0.5f,0.5f),/*mirror*/STColor3f(.1f,.1f,.1f),/*shiness*/43.f,/*refr*/STColor3f(.8f,.6f,.9f),/*sn*/2.0f);
-	rtMaterial(water1);
-    rtAttenuation(2.2f);
-    rtPushMatrix();
-    rtTranslate(.55f, -1.13f, .3f);
-	rtSphere(STPoint3(0.f,0.f,0.f),.1f);
-    rtPopMatrix();
-    
-    //water droplet 2
-    Material water2(/*ambient*/STColor3f(.1f,.1f,.1f),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.5f,0.5f,0.5f),/*mirror*/STColor3f(.2f,.2f,.2f),/*shiness*/30.f,/*refr*/STColor3f(.7f,.6f,.9f),/*sn*/1.6f);
-	rtMaterial(water2);
-    rtAttenuation(3.f);
-    rtPushMatrix();
-    rtTranslate(.3f, -1.362f, .8f);
-	rtSphere(STPoint3(0.f,0.f,0.f),.125f);
-    rtPopMatrix();
+//    //water droplet 1
+//    Material water1(/*ambient*/STColor3f(.1f,.1f,.1f),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.5f,0.5f,0.5f),/*mirror*/STColor3f(.1f,.1f,.1f),/*shiness*/43.f,/*refr*/STColor3f(.8f,.6f,.9f),/*sn*/2.0f);
+//	rtMaterial(water1);
+//    rtAttenuation(2.2f);
+//    rtPushMatrix();
+//    rtTranslate(.55f, -1.13f, .3f);
+//	rtSphere(STPoint3(0.f,0.f,0.f),.1f);
+//    rtPopMatrix();
+//    
+//    //water droplet 2
+//    Material water2(/*ambient*/STColor3f(.1f,.1f,.1f),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.5f,0.5f,0.5f),/*mirror*/STColor3f(.2f,.2f,.2f),/*shiness*/30.f,/*refr*/STColor3f(.7f,.6f,.9f),/*sn*/1.6f);
+//	rtMaterial(water2);
+//    rtAttenuation(3.f);
+//    rtPushMatrix();
+//    rtTranslate(.3f, -1.362f, .8f);
+//	rtSphere(STPoint3(0.f,0.f,0.f),.125f);
+//    rtPopMatrix();
     
     ////background
-    
+
 	Material mat_tri(/*ambient*/STColor3f(1.f,1.f,1.f),/*diffuse*/STColor3f(1.f,1.f,1.f),/*specular*/STColor3f(.2f,.2f,.2f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/40.f);
 	rtMaterial(mat_tri);
     rtBindTexture(0);
@@ -610,9 +636,9 @@ void ExampleScene::initializeFinalImage()
                /*uv1*/STPoint2(0.f,0.f),/*uv2*/STPoint2(1.f,1.f),/*uv3*/STPoint2(0.f,1.f));
     rtUnbindTexture();
 	
-	////set focus on water droplet
-	rtSetApeture(20.f);
-	rtSetFocus(STPoint3(.5f, -1.185f, .5f));
+//	////set focus on water droplet
+//	rtSetApeture(20.f);
+//	rtSetFocus(STPoint3(.5f, -1.185f, .5f));
 }
 
 

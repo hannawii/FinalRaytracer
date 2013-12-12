@@ -10,7 +10,7 @@
 class TriangleMesh : public Shape {
 public:
 	TriangleMesh(const std::string& file_name,bool _counter_clockwise=true,bool calculate_smoothed_normal=false,
-		bool read_normal_from_obj=false,bool read_tex_coord_from_obj=false,bool _use_accel_structure=true)
+		bool read_normal_from_obj=true,bool read_tex_coord_from_obj=true,bool _use_accel_structure=true)
 		:counter_clockwise(_counter_clockwise),use_accel_structure(_use_accel_structure)
 	{
 		this->name = "triangle_mesh";
@@ -47,7 +47,7 @@ public:
 			////calculate tex coordinate
 			STPoint2 vt[3];
 			if(read_tex_coord_from_obj){
-				for(int d=0;d<3;d++){vt[d]=mesh.mFaces[i]->v[d]->texPos;}
+				for(int d=0;d<3;d++){vt[d]=mesh.mFaces[i]->texPos[d];}
 			}
 
 			triangles.push_back(new SceneObject(new Triangle(v[0],v[1],v[2],n[0],n[1],n[2],vt[0],vt[1],vt[2])));

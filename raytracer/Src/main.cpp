@@ -29,7 +29,7 @@ int main(int argc, const char * argv[])
 
 	////scenes for final
 	//scene->initializeSceneObjMesh();
-	//scene->initializeSceneTexture();
+//    scene->initializeSceneTexture();
     scene->initializeFinalImage();
 
 	////set rendering scene from script files
